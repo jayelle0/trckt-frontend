@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+
+#project-table {
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+
+ .project-table-header {
+  border-bottom: 1px solid black;
+  font-weight: bold;
+
+} 
