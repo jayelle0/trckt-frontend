@@ -12,9 +12,8 @@ class Project extends React.Component {
         return totalHours
     }
 
-    renderTotalEarned = (hours) => {
-        hours = this.renderHours()
-
+    renderTotalEarned = () => {
+        let hours = this.renderHours()
         let totalEarned = this.props.project.hourly_fee*hours 
         return totalEarned
     
@@ -30,7 +29,7 @@ class Project extends React.Component {
                 <span>{this.renderHours()}</span> 
                 <span>{this.renderTotalEarned()}</span>
      
-                <span></span> 
+                <input type="checkbox" id="myCheck" onclick="myFunction()"/>
             </>
         )
     }
