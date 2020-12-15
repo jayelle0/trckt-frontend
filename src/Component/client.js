@@ -16,7 +16,7 @@ class Client extends React.Component {
         return (
             <>
             <h1 onClick= {this.showProjectsHandler}> {this.props.client.name}</h1>
-            {this.state.showProjects?  <ProjectContainer projects = {this.props.client.projects}/>:  null}
+            {this.state.showProjects?  <ProjectContainer  clientId ={this.props.client.id} projects = {this.props.client.projects}/>:  null}
             {/* <ProjectContainer projects = {this.props.client.projects}/>  */}
             </>
         )

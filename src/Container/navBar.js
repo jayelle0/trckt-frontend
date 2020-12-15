@@ -14,9 +14,9 @@ class NavBar extends React.Component {
                             <li class="nav-item">
                                 <NavLink to = "/clients"> View My Clients</NavLink>
                             </li>
-                            {/* <li class="nav-item">
-                                <NavLink to="/calendar-form">Create New Calendar</NavLink>
-                            </li> */}
+                            <li class="nav-item">
+                                <NavLink to="/clients/new">Add A New Client</NavLink>
+                            </li>
                         </ul>
                  
                 </nav>

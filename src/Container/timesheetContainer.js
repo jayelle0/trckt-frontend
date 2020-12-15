@@ -25,7 +25,7 @@ class TimesheetContainer extends React.Component {
                 <span className="timesheet-table-header"> Note</span>
                 <span> </span>
                 {this.renderTimesheets()}
-                {this.state.showTimesheetForm? <TimesheetForm/> : null}
+                {this.state.showTimesheetForm? <TimesheetForm projectId ={this.props.projectId}  clientId ={this.props.clientId} /> : null}
 
 
             </div>

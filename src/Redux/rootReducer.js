@@ -10,6 +10,14 @@ function userReducer (state=defaultState.user, action) {
         case "FETCH_USER":
             return action.payload
 
+        case "CREATE_TIMESHEET":
+            return action.payload
+
+        case "CREATE_CLIENT":
+            console.log(state)
+            // return [...state, action.payload ]   
+        
+
         default:
             return state 
     }

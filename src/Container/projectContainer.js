@@ -24,7 +24,7 @@ class ProjectContainer extends React.Component {
         return (
 
             <>
-                <NavLink to={`/projects/${projectObj.id}`}>
+                <NavLink to={`/clients/projects/${projectObj.id}`}>
                 <span>{projectObj.name}</span> 
                 </NavLink>
                 <span>{renderHours()}</span> 
@@ -39,7 +39,7 @@ class ProjectContainer extends React.Component {
     }
 
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         
         return (
 
@@ -47,32 +47,35 @@ class ProjectContainer extends React.Component {
           {  this.props.projects === undefined ? <h1> Loading Projects </h1> :
             <>
             <Router> 
-                
-            <Route exact path="/projects/:id"
-                            render = {({match})=> {
-                                let id= parseInt(match.params.id)
-                                let foundProject =this.props.projects.find((project)=> project.id === id)
-                                return(  <Project project={foundProject}/>)
-                        }}
-                        />
+                <Switch>
 
-                <Route exact path = "/clients" render={()=> {
-                    return (
-                            <>
-                            <div id = "project-table">
-                                <span className="project-table-header">Name</span>
-                                <span className="project-table-header">Hours</span>
-                                <span className="project-table-header">Total Earned</span>
-                                <span className="project-table-header"> Completed</span>
-                                {this.renderProjects()}
-                            </div>
-                             </>
-                    )
-                }} />
+                    <Route path="/clients/projects/:id"
+                                    render = {({match})=> {
+                                        let id= parseInt(match.params.id)
+                                        let foundProject =this.props.projects.find((project)=> project.id === id)
+                                        return(  <Project clientId ={this.props.clientId} project={foundProject}/>)
+                                    }}
+                                    />
+
+                    <Route exact path = "/clients" render={()=> {
+                        return (
+                                <>
+                                <div id = "project-table">
+                                    <span className="project-table-header">Name</span>
+                                    <span className="project-table-header">Hours</span>
+                                    <span className="project-table-header">Total Earned</span>
+                                    <span className="project-table-header"> Completed</span>
+                                    {this.renderProjects()}
+                                </div>
+                                 </>
+                        )
+                    }} />
+                
+
+                </Switch>
             </Router>
             </>        
         }
-        
         </>
         )
     }

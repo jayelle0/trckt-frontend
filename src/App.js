@@ -8,8 +8,10 @@ import {getUserFromApi} from './Redux/actions'
 import { BrowserRouter as Router, Route , Switch, withRouter} from 'react-router-dom'
 import ProjectContainer from './Container/projectContainer';
 import Project from './Component/project';
+import ClientForm from './Component/clientForm'
 
 class App extends React.Component {
+
   componentDidMount = () => {
     this.props.fetchUser()    
   }
@@ -29,12 +31,15 @@ renderProject = () => {
       <>
         <Navbar/>
           <div className="App">
-            <Switch> 
-                  <Route exact path ="/clients" render={() => <ClientContainer clients={this.props.user.clients}/>}/>
-                  <Route exact path ="/projects/:id" component={Project}/>
+             <Switch>
+
+                  <Route exact path ="/clients" render={() => <ClientContainer  clients={this.props.user.clients}/>}/>
+                  <Route exact path ="/clients/new" render={() => <ClientForm  userId={this.props.user.id} />}/>
+                  {/* <Route exact path ="/projects/:id" component={Project}/> */}
                   {/* <Route exact path ="/projects" render={this.renderProjects}/> */}
                 
-            </Switch> 
+             </Switch>
+          
           </div>
          </>
     );
