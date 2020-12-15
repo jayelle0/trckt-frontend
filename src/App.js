@@ -5,19 +5,38 @@ import ClientContainer from './Container/clientContainer'
 import React from 'react'
 import {connect} from 'react-redux'
 import {getUserFromApi} from './Redux/actions'
+import { BrowserRouter as Router, Route , Switch, withRouter} from 'react-router-dom'
+import ProjectContainer from './Container/projectContainer';
+import Project from './Component/project';
 
 class App extends React.Component {
   componentDidMount = () => {
     this.props.fetchUser()    
   }
 
+
+  renderProjects = () => {
+    return <ProjectContainer/> 
+  }
+  
+renderProject = () => {
+  return  <Project/>
+}
+
   render() {
     console.log(this.props)
     return (
-      <div className="App">
+      <>
         <Navbar/>
-        <ClientContainer clients={this.props.user.clients}/>
-      </div>
+          <div className="App">
+            <Switch> 
+                  <Route exact path ="/clients" render={() => <ClientContainer clients={this.props.user.clients}/>}/>
+                  <Route exact path ="/projects/:id" component={Project}/>
+                  {/* <Route exact path ="/projects" render={this.renderProjects}/> */}
+                
+            </Switch> 
+          </div>
+         </>
     );
   }
 }
@@ -31,4 +50,4 @@ function msp(state){
 }
 
 
-export default connect(msp,mdp)(App);
+export default withRouter(connect(msp, mdp)(App));

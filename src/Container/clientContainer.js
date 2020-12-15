@@ -1,6 +1,7 @@
 import React from 'react'
 import Client from '../Component/client'
-// import {connect} from 'react-redux'
+import {connect} from 'react-redux'
+import { BrowserRouter as Router, Route , Switch, withRouter} from 'react-router-dom'
 
 
 class ClientContainer extends React.Component {
@@ -12,16 +13,19 @@ class ClientContainer extends React.Component {
     render() {
         console.log(this.props)
         return (
-            <>
+          
+         <>
             { this.props.clients === undefined ? <h1> Loading Clients </h1>:
-                <>
+                 <>
                 {this.renderClients()}
                 </>
             }
-           </>
+         </>
         )
+             
     }
 }
 
 
-export default ClientContainer
+
+export default withRouter(ClientContainer)

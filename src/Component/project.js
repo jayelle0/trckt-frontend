@@ -1,14 +1,15 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
+import TimesheetContainer from '../Container/timesheetContainer'
+
 
 class Project extends React.Component {
 
-// name, hours, total earned, completed 
+
     renderHours = () => { 
         let hoursArray = []
         hoursArray = this.props.project.timesheets.map(timesheetobj=> timesheetobj.hours)
         let totalHours = hoursArray.reduce((a, b) => a + b, 0) 
-        // this.renderTotalEarned(totalHours)
-        // console.log("hours passed")
         return totalHours
     }
 
@@ -20,16 +21,16 @@ class Project extends React.Component {
     }
 
     render() {
-        // console.log(this.props)
+        console.log(this.props)
         // console.log(typeof this.renderHours())
         return (
 
             <>
-                <span>{this.props.project.name}</span> 
-                <span>{this.renderHours()}</span> 
-                <span>{this.renderTotalEarned()}</span>
-     
-                <input type="checkbox" id="myCheck" onclick="myFunction()"/>
+            <h5>Project Name: {this.props.project.name}</h5>
+            <h5>Total Hours:   {this.renderHours()}</h5>
+            <h5>Total Earned: {this.renderTotalEarned()}</h5>
+            <TimesheetContainer timesheets = {this.props.project.timesheets}/>
+            
             </>
         )
     }

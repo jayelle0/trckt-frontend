@@ -49,3 +49,15 @@
   font-weight: bold;
 
 } 
+
+#timesheet-table {
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+
+ .timesheet-table-header {
+  border-bottom: 1px solid black;
+  font-weight: bold;
+
+} 
