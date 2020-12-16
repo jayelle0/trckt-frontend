@@ -21,7 +21,7 @@ class Project extends React.Component {
     }
 
     render() {
-        // console.log(this.props)
+        console.log(this.props)
         // console.log(typeof this.renderHours())
         return (
 
@@ -29,7 +29,7 @@ class Project extends React.Component {
              <h5>Project Name: {this.props.project.name}</h5>
             <h5>Total Hours:   {this.renderHours()}</h5>
             <h5>Total Earned: {this.renderTotalEarned()}</h5>
-            <TimesheetContainer timesheets = {this.props.project.timesheets} projectId ={this.props.project.id}  clientId ={this.props.clientId} />
+            <TimesheetContainer timesheets = {this.props.project.timesheets} projectId ={this.props.project.id}  clientId ={this.props.client.id} />
             
             </>
         )

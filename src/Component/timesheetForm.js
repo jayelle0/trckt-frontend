@@ -16,9 +16,10 @@ class TimesheetForm extends React.Component {
         })
     }
 
-    formHandler = (event) => {
+    submitHandler = (event) => {
         event.preventDefault()
         this.props.createTimesheet(this.state, this.props.clientId, this.props.projectId)
+        this.props.closeTimesheetContainer()
         this.setState({
             date: "", 
             hours: "", 
@@ -31,10 +32,10 @@ class TimesheetForm extends React.Component {
         // console.log(this.props)
         return (
              <>
-                <input type = "date" name = "date" value = {this.state.date} onChange = {this.changeHandler} placeholder = "Hours worked" />
-                <input type = "number" name = "hours" value = {this.state.hours} onChange = {this.changeHandler}/>
-                <input type = "text" name = "note" value = {this.state.note} onChange = {this.changeHandler}/>
-                <input type = "submit" value = "Submit Timesheet" onClick = {this.formHandler}/>
+                <input type = "date" name = "date" value = {this.state.date} onChange = {this.changeHandler} placeholder = "Work Date" />
+                <input type = "number" name = "hours" value = {this.state.hours} onChange = {this.changeHandler} placeholder = "Hours worked" />
+                <input type = "text" name = "note" value = {this.state.note} onChange = {this.changeHandler}placeholder = "Include All Notes" />
+                <input type = "submit" value = "Submit Timesheet" onClick = {this.submitHandler} />
             </>
         )
     }

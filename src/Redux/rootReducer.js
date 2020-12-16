@@ -11,12 +11,16 @@ function userReducer (state=defaultState.user, action) {
             return action.payload
 
         case "CREATE_TIMESHEET":
-            return action.payload
+            return {...state, ...action.payload }
 
         case "CREATE_CLIENT":
-            console.log(state)
-            // return [...state, action.payload ]   
-        
+            return {...state, ...action.payload }
+
+        case "CREATE_PROJECT":    
+            return {...state, ...action.payload } 
+
+        case "UPDATE_PROJECT_COMP":    
+            return {...state, ...action.payload }
 
         default:
             return state 

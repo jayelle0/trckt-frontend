@@ -17,30 +17,35 @@ class App extends React.Component {
   }
 
 
-  renderProjects = () => {
-    return <ProjectContainer/> 
+  renderProject = (routerProps) => {
+    // console.log("routerProps:",  routerProps)
+    let projectId =routerProps.match.params.id
+    let clientId = routerProps.match.url.split("/")[2]
+    let clientObj = this.props.user.clients.find(client => client.id == clientId)
+    let projectObj = clientObj.projects.find(project => project.id == projectId)
+    // console.log(clientObj)
+    return <Project client = {clientObj} project ={projectObj}/>
   }
   
-renderProject = () => {
-  return  <Project/>
-}
+  renderClientContainer = (routerProps) => {
+    if (routerProps.location.pathname === "/clients") {
+      return <ClientContainer  clients={this.props.user.clients}/>
+    }
+  }
 
   render() {
     console.log(this.props)
+
     return (
       <>
         <Navbar/>
           <div className="App">
              <Switch>
-
-                  <Route exact path ="/clients" render={() => <ClientContainer  clients={this.props.user.clients}/>}/>
+                  <Route exact path ="/clients" render={this.renderClientContainer}/>
+                  <Route path="/clients/:id/projects/:id" render={this.renderProject} />               
                   <Route exact path ="/clients/new" render={() => <ClientForm  userId={this.props.user.id} />}/>
-                  {/* <Route exact path ="/projects/:id" component={Project}/> */}
-                  {/* <Route exact path ="/projects" render={this.renderProjects}/> */}
-                
-             </Switch>
-          
-          </div>
+             </Switch>         
+          </div>  
          </>
     );
   }

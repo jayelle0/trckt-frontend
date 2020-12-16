@@ -4,6 +4,13 @@ import TimesheetForm from '../Component/timesheetForm'
 
 class TimesheetContainer extends React.Component {
 
+
+    componentDidUpdate= (prevProps) => {
+        if (this.props.timesheets !== prevProps.timesheets) {
+            this.renderTimesheets()
+        }
+    }
+
     state = {
         showTimesheetForm: false
     }
@@ -13,6 +20,10 @@ class TimesheetContainer extends React.Component {
 
     buttonHandler = () => {
         this.setState({showTimesheetForm: true})
+    }
+
+    closeTimesheetContainer = () => {
+        this.setState({showTimesheetForm: false})
     }
     render() {
 
@@ -25,7 +36,7 @@ class TimesheetContainer extends React.Component {
                 <span className="timesheet-table-header"> Note</span>
                 <span> </span>
                 {this.renderTimesheets()}
-                {this.state.showTimesheetForm? <TimesheetForm projectId ={this.props.projectId}  clientId ={this.props.clientId} /> : null}
+                {this.state.showTimesheetForm? <TimesheetForm closeTimesheetContainer ={this.closeTimesheetContainer} projectId ={this.props.projectId}  clientId ={this.props.clientId} /> : null}
 
 
             </div>
