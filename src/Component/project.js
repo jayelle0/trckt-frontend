@@ -26,10 +26,13 @@ class Project extends React.Component {
         return (
 
             <>           
-             <h5>Project Name: {this.props.project.name}</h5>
+            <h1>Client: {this.props.client.name} </h1>
+            <h5>Project Name: {this.props.project.name}</h5>
+            <h5>Payment Terms: {this.props.project.payment_terms}</h5> 
             <h5>Total Hours:   {this.renderHours()}</h5>
-            <h5>Total Earned: {this.renderTotalEarned()}</h5>
-            <TimesheetContainer timesheets = {this.props.project.timesheets} projectId ={this.props.project.id}  clientId ={this.props.client.id} />
+            <h5>Total Earned: ${this.renderTotalEarned()}</h5>
+            <h5>Complete: {this.props.project.complete? "Yes":"No" }</h5> 
+            <TimesheetContainer timesheets = {this.props.project.timesheets} projectId ={this.props.project.id}  clientId ={this.props.client.id} project= {this.props.project}/>
             
             </>
         )

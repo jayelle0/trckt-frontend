@@ -4,6 +4,10 @@ import TimesheetForm from '../Component/timesheetForm'
 
 class TimesheetContainer extends React.Component {
 
+    state = {
+        showTimesheetButton: this.props.project.complete
+    }
+
 
     componentDidUpdate= (prevProps) => {
         if (this.props.timesheets !== prevProps.timesheets) {
@@ -40,7 +44,7 @@ class TimesheetContainer extends React.Component {
 
 
             </div>
-                <button onClick = {this.buttonHandler}> Add Timesheet </button>
+               {this.props.project.complete? null: <button onClick = {this.buttonHandler}> Add Timesheet </button>}
              </>
         )
     }

@@ -68,7 +68,7 @@ class ProjectContainer extends React.Component {
                             <span>{projectObj.name}</span> 
                             </NavLink>
                             <span>{renderHours()}</span> 
-                            <span>{renderTotalEarned()}</span>
+                            <span>${renderTotalEarned()}</span>
                             <input type="checkbox" id="myCheck" checked={projectObj.complete} onChange={clickHandler }/>
                             <button className = "project-delete-btn" onClick ={deleteHandler}> Delete </button>
 
