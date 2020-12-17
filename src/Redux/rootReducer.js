@@ -22,6 +22,9 @@ function userReducer (state=defaultState.user, action) {
         case "UPDATE_PROJECT_COMP":    
             return {...state, ...action.payload }
 
+        case "DELETE_PROJECT":    
+            return {...state, ...action.payload }
+
         default:
             return state 
     }

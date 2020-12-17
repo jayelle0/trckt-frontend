@@ -3,6 +3,7 @@ import {CREATE_TIMESHEET} from './actionType'
 import {CREATE_CLIENT} from './actionType'
 import {CREATE_PROJECT} from './actionType'
 import {UPDATE_PROJECT_COMP} from './actionType'
+import {DELETE_PROJECT} from './actionType' 
 
 
 export function getUserFromApi () {
@@ -97,6 +98,29 @@ export function updateProjectCompletion (updatedProject, projectId, clientId) {
                 let projectIndex = prevState.user.clients[clientIndex].projects.findIndex(project => project.id === projectId)
                 prevState.user.clients[clientIndex].projects.splice(projectIndex,1, updatedProjectObj)
                 dispatch({type:UPDATE_PROJECT_COMP, payload:prevState.user})
+            });
+    }   
+    
+}
+
+export function deleteProject (projectId, clientId) {
+     
+    return function(dispatch, getState) {
+        fetch(`http://localhost:3000/api/v1/projects/${projectId}`, {
+            method: 'DELETE', 
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })    
+        .then(response => response.json())
+        .then(data => { 
+                // console.log(data)
+                let prevState = {...getState()}
+                let clientIndex = prevState.user.clients.findIndex(client => client.id === clientId)
+                let projectIndex = prevState.user.clients[clientIndex].projects.findIndex(project => project.id === projectId)
+                prevState.user.clients[clientIndex].projects.splice(projectIndex,1)
+                console.log(prevState)
+                dispatch({type:DELETE_PROJECT, payload:prevState.user})
             });
     }   
     

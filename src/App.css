@@ -41,7 +41,7 @@
 #project-table {
   border: 1px solid black;
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto;
 }
 
  .project-table-header {
@@ -54,6 +54,7 @@
   border: 1px solid black;
   display: grid;
   grid-template-columns: auto auto auto auto;
+  text-align: center;
 }
 
  .timesheet-table-header {
@@ -61,3 +62,11 @@
   font-weight: bold;
 
 } 
+
+.project-delete-btn {
+  opacity: 0
+}
+
+.project-delete-btn:hover {
+  opacity: 1  
+}

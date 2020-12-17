@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route , Switch, withRouter, NavLink} from 'rea
 import ProjectForm from '../Component/projectForm'
 import Modal from 'react-modal'
 import {connect} from 'react-redux'
-import {updateProjectCompletion} from '../Redux/actions'
+import {updateProjectCompletion, deleteProject} from '../Redux/actions'
 
 
 class ProjectContainer extends React.Component {
@@ -58,6 +58,10 @@ class ProjectContainer extends React.Component {
         const clickHandler = () => {
             this.props.updateProjectCompletion(!projectObj.complete, projectObj.id, this.props.clientId)
         }
+
+        const deleteHandler = () => {
+            this.props.deleteProject (projectObj.id, this.props.clientId)
+        }
             return (
                 <>
                             <NavLink to={`/clients/${this.props.clientId}/projects/${projectObj.id}`}>
@@ -66,7 +70,8 @@ class ProjectContainer extends React.Component {
                             <span>{renderHours()}</span> 
                             <span>{renderTotalEarned()}</span>
                             <input type="checkbox" id="myCheck" checked={projectObj.complete} onChange={clickHandler }/>
-                            
+                            <button className = "project-delete-btn" onClick ={deleteHandler}> Delete </button>
+
                         </>
             )
             
@@ -75,7 +80,7 @@ class ProjectContainer extends React.Component {
 
 
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         return (
         <>
           {  this.props.projects === undefined ? <h1> Loading Projects </h1> :
@@ -89,6 +94,7 @@ class ProjectContainer extends React.Component {
                                     <span className="project-table-header">Hours</span>
                                     <span className="project-table-header">Total Earned</span>
                                     <span className="project-table-header"> Completed</span>
+                                    <span className="project-table-header"> Delete</span>
                                     {this.renderProjects()}
                                 </div>
                                     <button onClick={this.openModalForm}> Add Project</button> 
@@ -111,7 +117,10 @@ class ProjectContainer extends React.Component {
 }
 
 function mdp(dispatch){
-    return {updateProjectCompletion: (updatedProject, projectId, clientId) => dispatch(updateProjectCompletion (updatedProject, projectId, clientId))}
+    return {
+        updateProjectCompletion: (updatedProject, projectId, clientId) => dispatch(updateProjectCompletion (updatedProject, projectId, clientId)),
+        deleteProject :(projectId, clientId)=> dispatch(deleteProject (projectId, clientId))
+    }
   }
 
 
