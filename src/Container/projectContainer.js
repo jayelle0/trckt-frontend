@@ -40,9 +40,9 @@ class ProjectContainer extends React.Component {
         this.setState({formModalIsOpen:false})
     }
 
-    renderProjects = () => { return this.props.projects.map(projectObj => 
-
-        {let renderHours = () => { 
+    renderProjects = () => { return this.props.projects.map(projectObj => {
+       
+        let renderHours = () => { 
         let hoursArray = []
         hoursArray = projectObj.timesheets.map(timesheetobj=> timesheetobj.hours)
         let totalHours = hoursArray.reduce((a, b) => a + b, 0) 
@@ -56,15 +56,15 @@ class ProjectContainer extends React.Component {
         }
 
         const clickHandler = () => {
-            this.props.updateProjectCompletion(!projectObj.complete, projectObj.id, this.props.clientId)
+            this.props.updateProjectCompletion(!projectObj.complete, projectObj.id, projectObj.client_id)
         }
 
         const deleteHandler = () => {
-            this.props.deleteProject (projectObj.id, this.props.clientId)
+            this.props.deleteProject (projectObj.id, projectObj.client_id)
         }
             return (
                 <>
-                            <NavLink to={`/clients/${this.props.clientId}/projects/${projectObj.id}`}>
+                            <NavLink to={`/clients/${projectObj.client_id}/projects/${projectObj.id}`}>
                             <span>{projectObj.name}</span> 
                             </NavLink>
                             <span>{renderHours()}</span> 
@@ -80,11 +80,12 @@ class ProjectContainer extends React.Component {
 
 
     render() {
-        // console.log(this.props)
+        console.log(this.props)
         return (
         <>
           {  this.props.projects === undefined ? <h1> Loading Projects </h1> :
             <>
+            {/* <Router> */}
                 <Switch>
                     <Route exact path = "/clients" render={()=> {
                         return (
@@ -106,9 +107,25 @@ class ProjectContainer extends React.Component {
                         )
                     }} />
 
+                      <Route exact path = "/open_projects" render={()=> {
+                        return (
+                                <>
+                                <div id = "project-table">
+                                    <span className="project-table-header">Name</span>
+                                    <span className="project-table-header">Hours</span>
+                                    <span className="project-table-header">Total Earned</span>
+                                    <span className="project-table-header"> Completed</span>
+                                    <span className="project-table-header"> Delete</span>
+                                    {this.renderProjects()}
+                                </div>
+                                    
+                                 </>
+                        )
+                    }} />
+
 
                 </Switch>
-         
+            {/* </Router>  */}
             </>        
         }
         </>

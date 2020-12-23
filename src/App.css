@@ -1,6 +1,11 @@
+
 .App {
   text-align: center;
+
 }
+
+
+
 
 .App-logo {
   height: 40vmin;
@@ -41,6 +46,9 @@
 #project-table {
   border: 1px solid black;
   display: grid;
+  margin-left: 100px;
+  margin-right: 100px;
+  text-align: center;
   grid-template-columns: auto auto auto auto auto;
 }
 
@@ -52,6 +60,8 @@
 
 #timesheet-table {
   border: 1px solid black;
+  margin-left: 100px;
+  margin-right: 100px;
   display: grid;
   grid-template-columns: auto auto auto auto;
   text-align: center;
@@ -69,4 +79,20 @@
 
 .project-delete-btn:hover {
   opacity: 1  
+}
+
+.signup-form {
+  width: 150px;
+  padding: 2px
+  /* box-shadow: 10px 10px 8px 10px rgb(171, 171, 227); */
+}
+
+.navbar-nav {
+  display: inline;
+  list-style-type: none
+}
+
+nav {
+  display: inline;
+  list-style-type: none
 }

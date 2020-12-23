@@ -6,9 +6,11 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {getUserFromApi} from './Redux/actions'
 import { BrowserRouter as Router, Route , Switch, withRouter} from 'react-router-dom'
-import ProjectContainer from './Container/projectContainer';
+import OpenProjectsContainer from './Container/openProjectsContainer';
 import Project from './Component/project';
 import ClientForm from './Component/clientForm'
+import AuthContainer from './Container/authContainer'
+import User from './Component/user'
 
 class App extends React.Component {
 
@@ -39,12 +41,18 @@ class App extends React.Component {
     return (
       <>
         <Navbar/>
+       
+        {/* <User/> */}
           <div className="App">
+ 
              <Switch>
+                  <Route exact path ="/" component= {AuthContainer}/>
                   <Route exact path ="/clients" render={this.renderClientContainer}/>
-                  <Route path="/clients/:id/projects/:id" render={this.renderProject} />               
                   <Route exact path ="/clients/new" render={() => <ClientForm  userId={this.props.user.id} />}/>
-             </Switch>         
+                  <Route exact path ="/open_projects" render={() => <OpenProjectsContainer user={this.props.user} />}/>
+                  <Route path="/clients/:id/projects/:id" render={this.renderProject} />               
+             </Switch>  
+            
           </div>  
          </>
     );

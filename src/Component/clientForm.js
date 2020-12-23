@@ -18,6 +18,7 @@ class ClientForm extends React.Component {
     submitHandler= (event) => {
         event.preventDefault() 
         this.props.createClient(this.state)
+        
     }
     render() {
         return (
