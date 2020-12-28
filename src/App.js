@@ -11,6 +11,7 @@ import Project from './Component/project';
 import ClientForm from './Component/clientForm'
 import AuthContainer from './Container/authContainer'
 import User from './Component/user'
+import Chart from './Component/chart'
 
 class App extends React.Component {
 
@@ -45,6 +46,7 @@ class App extends React.Component {
         {/* <User/> */}
           <div className="App">
  
+        {/* <Chart user={this.props.user}/>  */}
              <Switch>
                   <Route exact path ="/" component= {AuthContainer}/>
                   <Route exact path ="/clients" render={this.renderClientContainer}/>

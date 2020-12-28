@@ -1,9 +1,10 @@
 import React from 'react'
 import ProjectContainer from './projectContainer'
+import Chart from '../Component/chart'
 
 class OpenProjectsContainer extends React.Component{
 
-    openProjects = () => {
+    allProjects = () => {
         let allProjects = []
         for( let i = 0; i < this.props.user.clients.length;i++){
 
@@ -12,20 +13,24 @@ class OpenProjectsContainer extends React.Component{
                allProjects.push(innerValue)
             }
          }
-        let openProjects = allProjects.filter(projects => projects.complete ===false)
-        return openProjects
+        // let openProjects = allProjects.filter(projects => projects.complete ===false)
+        
+        return allProjects
     }
 
-    
 
-    // renderOpenProjects = () => {
-    //     return this.openProjects().map(projectObj => <Project clientId={this.props.user.clients.filter(client => client.id===projectObj.client_Id).id} projects ={projectObj}/>)
-        
-    // }
+    openProjects = ()  => {
+       return this.allProjects().filter(projects => projects.complete ===false)
+         
+
+    }
+
   
     render() {
+        // console.log(this.allProjects())
         return (
             <>
+              <Chart allProjects={this.allProjects()}/>
               <ProjectContainer projects={this.openProjects()}/>
             </>
         )

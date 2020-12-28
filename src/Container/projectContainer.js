@@ -42,18 +42,6 @@ class ProjectContainer extends React.Component {
 
     renderProjects = () => { return this.props.projects.map(projectObj => {
        
-        let renderHours = () => { 
-        let hoursArray = []
-        hoursArray = projectObj.timesheets.map(timesheetobj=> timesheetobj.hours)
-        let totalHours = hoursArray.reduce((a, b) => a + b, 0) 
-        return totalHours
-        }
-
-       let renderTotalEarned = () => {
-        let hours = renderHours()
-        let totalEarned = projectObj.hourly_fee*hours 
-        return totalEarned
-        }
 
         const clickHandler = () => {
             this.props.updateProjectCompletion(!projectObj.complete, projectObj.id, projectObj.client_id)
@@ -67,8 +55,8 @@ class ProjectContainer extends React.Component {
                             <NavLink to={`/clients/${projectObj.client_id}/projects/${projectObj.id}`}>
                             <span>{projectObj.name}</span> 
                             </NavLink>
-                            <span>{renderHours()}</span> 
-                            <span>${renderTotalEarned()}</span>
+                            <span>{projectObj.project_total_hours}</span> 
+                            <span>${projectObj.project_total_earned}</span>
                             <input type="checkbox" id="myCheck" checked={projectObj.complete} onChange={clickHandler }/>
                             <button className = "project-delete-btn" onClick ={deleteHandler}> Delete </button>
 
