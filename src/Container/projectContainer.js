@@ -48,7 +48,7 @@ class ProjectContainer extends React.Component {
         }
 
         const deleteHandler = () => {
-            this.props.deleteProject (projectObj.id, projectObj.client_id)
+            this.props.deleteProject (projectObj.id, projectObj.client_id,projectObj.project_total_earned)
         }
             return (
                 <>
@@ -68,7 +68,7 @@ class ProjectContainer extends React.Component {
 
 
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         return (
         <>
           {  this.props.projects === undefined ? <h1> Loading Projects </h1> :
@@ -124,7 +124,7 @@ class ProjectContainer extends React.Component {
 function mdp(dispatch){
     return {
         updateProjectCompletion: (updatedProject, projectId, clientId) => dispatch(updateProjectCompletion (updatedProject, projectId, clientId)),
-        deleteProject :(projectId, clientId)=> dispatch(deleteProject (projectId, clientId))
+        deleteProject :(projectId, clientId,project_amt)=> dispatch(deleteProject (projectId, clientId,project_amt))
     }
   }
 

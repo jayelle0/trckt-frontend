@@ -3,6 +3,7 @@ import ProjectContainer from '../Container/projectContainer'
 
 class Client extends React.Component {
 
+
     state = {
         showProjects: false 
     }
@@ -12,7 +13,7 @@ class Client extends React.Component {
     }
 
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         return (
             <>
             <h1 onClick= {this.showProjectsHandler}> {this.props.client.name}</h1>

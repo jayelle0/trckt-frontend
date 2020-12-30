@@ -13,6 +13,7 @@ export function getUserFromApi () {
         .then(currentUserObj => {
                 dispatch({type:FETCH_USER, payload:currentUserObj})
                 localStorage.setItem("user", JSON.stringify(currentUserObj))
+               
             });
     }
 }
@@ -34,6 +35,11 @@ export function createTimesheet (newTimesheet, clientId, projectId) {
                 let clientIndex = prevState.user.clients.findIndex(client => client.id === clientId)
                 let projectIndex = prevState.user.clients[clientIndex].projects.findIndex(project => project.id === projectId)
                 prevState.user.clients[clientIndex].projects[projectIndex].timesheets.push(newTimesheetOBj)
+                prevState.user.clients[clientIndex].projects[projectIndex].project_total_hours += newTimesheetOBj.hours
+                let total_earned = newTimesheetOBj.hours*prevState.user.clients[clientIndex].projects[projectIndex].hourly_fee
+                prevState.user.clients[clientIndex].projects[projectIndex].project_total_earned += total_earned
+                prevState.user.clients[clientIndex].client_incomplete_earned += total_earned
+                console.log(prevState.user)
                 dispatch({type:CREATE_TIMESHEET, payload:prevState.user})
             });
     }   
@@ -93,17 +99,20 @@ export function updateProjectCompletion (updatedProject, projectId, clientId) {
           })    
         .then(response => response.json())
         .then(updatedProjectObj => { 
+                console.log(updatedProjectObj)
                 let prevState = {...getState()}
                 let clientIndex = prevState.user.clients.findIndex(client => client.id === clientId)
                 let projectIndex = prevState.user.clients[clientIndex].projects.findIndex(project => project.id === projectId)
                 prevState.user.clients[clientIndex].projects.splice(projectIndex,1, updatedProjectObj)
+                prevState.user.clients[clientIndex].client_incomplete_earned -= updatedProjectObj.project_total_earned
+                prevState.user.clients[clientIndex].client_completed_earned += updatedProjectObj.project_total_earned
                 dispatch({type:UPDATE_PROJECT_COMP, payload:prevState.user})
             });
     }   
     
 }
 
-export function deleteProject (projectId, clientId) {
+export function deleteProject (projectId, clientId,project_amt) {
      
     return function(dispatch, getState) {
         fetch(`http://localhost:3000/api/v1/projects/${projectId}`, {
@@ -113,12 +122,18 @@ export function deleteProject (projectId, clientId) {
             },
           })    
         .then(response => response.json())
-        .then(data => { 
-                // console.log(data)
+        .then(deletedProjObj => { 
+                console.log(getState())
                 let prevState = {...getState()}
                 let clientIndex = prevState.user.clients.findIndex(client => client.id === clientId)
                 let projectIndex = prevState.user.clients[clientIndex].projects.findIndex(project => project.id === projectId)
                 prevState.user.clients[clientIndex].projects.splice(projectIndex,1)
+                if (deletedProjObj.complete === true ) {
+                  prevState.user.clients[clientIndex].client_completed_earned-=project_amt
+                }
+                else if (deletedProjObj.complete === false) {
+                  prevState.user.clients[clientIndex].client_incomplete_earned-=project_amt
+                }
                 console.log(prevState)
                 dispatch({type:DELETE_PROJECT, payload:prevState.user})
             });
