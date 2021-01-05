@@ -1,6 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {createProject} from '../Redux/actions'
+import { Button, Header, Icon, Modal, Form,   } from 'semantic-ui-react'
+import { BrowserRouter as Router, Route , Switch, withRouter, NavLink} from 'react-router-dom'
 
 class ProjectForm extends React.Component {
     state = {
@@ -16,9 +18,15 @@ class ProjectForm extends React.Component {
         })
     }
 
+    dropDownHandler  = (e, { value }) => {
+    console.log("e:", e )
+    console.log("value:", value )
+    this.setState({ client_id: value })
+}
+
     formHandler = (event) => {
         event.preventDefault()
-        this.props.createProject(this.state, this.props.clientId)
+        this.props.createProject(this.state)
         console.log("form is submitted") 
         this.setState({
             name: "", 
@@ -29,21 +37,90 @@ class ProjectForm extends React.Component {
         this.props.closeFormModal()
     }
     
+    clientList = () => {
+        
+        return this.props.user.clients.map(client => {
+            const container = {};
+
+            container.key = client.id;
+            container.text = client.name;
+            container.value = client.id;
+            return container;
+       })
+         
+
+   
+    }
+    
     render() {
-        //  console.log(this.props)
+         console.log(this.state)
         return (
-             <>
-                <input type = "text" name = "name" value = {this.state.date} onChange = {this.changeHandler} placeholder = "Include Project Name" /> <br/> 
-                <input type = "number" name = "payment_terms" value = {this.state.hours} onChange = {this.changeHandler} placeholder = "Include Project Payment Terms"/> <br/> 
-                <input type = "number" name = "hourly_fee" value = {this.state.note} onChange = {this.changeHandler } placeholder = "Include Project Hourly Fee"/> <br/> 
-                <input type = "submit" value = "Add New Project" onClick = {this.formHandler}/> <br/> 
+            <>
+            <Switch> 
+            <Route exact path = "/clients" render={()=> {
+                     return (
+                        <>
+            
+                        <Header content='New Project Form ' />
+                        <Modal.Content>
+                            <Form onSubmit= {this.formHandler}>
+                                <Form.Group widths='equal'>
+                                <Form.Input fluid label='Name' placeholder=' name' name= "name" value={this.state.name} onChange = {this.changeHandler}  />   <br/> 
+                                <br/> 
+                                <Form.Input fluid label='Payment Terms' name= "payment_terms" value={this.state.payment_terms} onChange = {this.changeHandler} placeholder= "Payment Terms"  />     <br/>              
+                                <Form.Input fluid label='Hourly Fee' name= "hourly_fee" value={this.state.hourly_fee} onChange = {this.changeHandler} placeholder= "Hourly Fee"   />   <br/> 
+            
+                                <Button size="small" color= "blue" type='submit'>Add New Project</Button>
+                                </Form.Group>
+                            
+                            </Form>
+                        </Modal.Content>
+                        
+                        </>
+                     )
+            }} />
+            <Route exact path = "/open_projects" render={()=> {
+                     return (
+                        <>
+                        
+                        <Header content='New Project Form' />
+                        <Modal.Content>
+                            <Form onSubmit= {this.formHandler}>
+                                <Form.Group widths='equal'>
+                                
+                                <Form.Input fluid label='Name' placeholder=' name' name= "name" value={this.state.name} onChange = {this.changeHandler}  />   <br/> 
+                                <br/> 
+                                <Form.Select
+                                    fluid
+                                    label='Client'
+                                    name = 'client_id'
+                                    options={this.clientList()}
+                                    placeholder='Client'
+                                    onChange = {this.dropDownHandler}
+                                    value={this.state.client_id}
+                                    
+                                />
+                                <Form.Input fluid label='Payment Terms' name= "payment_terms" value={this.state.payment_terms} onChange = {this.changeHandler} placeholder= "Payment Terms"  />     <br/>              
+                                <Form.Input fluid label='Hourly Fee' name= "hourly_fee" value={this.state.hourly_fee} onChange = {this.changeHandler} placeholder= "Hourly Fee"   />   <br/> 
+            
+                                <Button size="small" color= "blue" type='submit'>Add New Project</Button>
+                                </Form.Group>
+                            
+                            </Form>
+                        </Modal.Content>
+                        
+                        </>
+                     )
+            }} />
+
+            </Switch>
             </>
         )
     }
 }
 
 function mdp(dispatch){
-    return {createProject: (newProject, clientId) => dispatch(createProject(newProject, clientId))}
+    return {createProject: (newProject) => dispatch(createProject(newProject))}
   }
   
 

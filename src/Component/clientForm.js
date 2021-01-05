@@ -1,6 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {createClient} from '../Redux/actions'
+import { Button, Header, Icon, Modal, Form,   } from 'semantic-ui-react'
+
 class ClientForm extends React.Component {
     state = {
         user_id: this.props.userId, 
@@ -18,17 +20,38 @@ class ClientForm extends React.Component {
     submitHandler= (event) => {
         event.preventDefault() 
         this.props.createClient(this.state)
+        this.props.closeForm()
+        this.setState( {
+            user_id: this.props.userId, 
+            name: "", 
+            email: "", 
+            address: "", 
+            phone: "", 
+    
+        })
         
     }
     render() {
         return (
-           <form onSubmit= {this.submitHandler}> 
-               <input type = "text" name= "name" value={this.state.name} onChange = {this.changeHandler} placeholder= "Client Name" /> <br/>
-               <input type = "email" name= "email" value={this.state.email} onChange = {this.changeHandler} placeholder= "Client Email" /><br/>
-               <input type = "text" name= "address" value={this.state.address} onChange = {this.changeHandler} placeholder= "Client Address" /><br/>
-               <input type = "tel" name= "phone" value={this.state.phone} onChange = {this.changeHandler} placeholder= "Client Phone" /><br/>
-               <button type="submit">Submit New Client</button> 
-           </form>
+            <>
+            <Header content='New Client Form ' />
+            <Modal.Content>
+            <Form onSubmit= {this.submitHandler}>
+                <Form.Group widths='equal'>
+                <Form.Input fluid label='Name' placeholder=' name' name= "name" value={this.state.name} onChange = {this.changeHandler}  />   <br/> 
+                <br/> 
+                <Form.Input fluid label='Email' name= "email" value={this.state.email} onChange = {this.changeHandler} placeholder= "E-Mail"  />     <br/>              
+                <Form.Input fluid label='Address' name= "address" value={this.state.address} onChange = {this.changeHandler} placeholder= "Address"   />   <br/> 
+                <Form.Input fluid label='Phone' type = "tel" name= "phone" value={this.state.phone} onChange = {this.changeHandler} placeholder= "Phone #"  />  <br/> 
+                <Button size="small" color= "blue" type='submit'>Submit</Button>
+                </Form.Group>
+            
+          </Form>
+
+        
+            </Modal.Content>
+           </>
+
         )
     }
 }

@@ -4,28 +4,66 @@ import {CREATE_CLIENT} from './actionType'
 import {CREATE_PROJECT} from './actionType'
 import {UPDATE_PROJECT_COMP} from './actionType'
 import {DELETE_PROJECT} from './actionType' 
+import {CREATE_USER} from './actionType' 
 
 
-export function getUserFromApi () {
+
+
+export function getUserFromApi (loginUser) {
     return function(dispatch) {
-        fetch('http://localhost:3000/api/v1/users/1') 
-        .then(response => response.json())
-        .then(currentUserObj => {
-                dispatch({type:FETCH_USER, payload:currentUserObj})
-                localStorage.setItem("user", JSON.stringify(currentUserObj))
-               
-            });
+    //  debugger
+      fetch('http://localhost:3000/api/v1/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      
+      },
+      body: JSON.stringify(loginUser)
+      })
+      .then(r => r.json())
+      .then(loggedInUser => {
+        console.log(loggedInUser)
+        localStorage.setItem("token", loggedInUser.jwt)
+        dispatch({type:FETCH_USER, payload:loggedInUser.user})
+       
+      })
     }
+}
+
+
+export function addUser (newUser) {
+  return function(dispatch) {
+  //  debugger
+    fetch('http://localhost:3000/api/v1/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    
+    },
+    body: JSON.stringify(newUser)
+    })
+    .then(r => r.json())
+    .then(newUserObj => {
+      console.log(newUserObj)
+      localStorage.setItem("token", newUserObj.jwt)
+      dispatch({type:CREATE_USER, payload:newUserObj.user})
+     
+    })
+  }
 }
 
 
 export function createTimesheet (newTimesheet, clientId, projectId) {
     return function(dispatch, getState) {
-         
+      const token = localStorage.getItem('token');
         fetch('http://localhost:3000/api/v1/timesheets', {
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json',
+              "Accepts": "application/json",
+              "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify(newTimesheet),
           }) 
@@ -49,16 +87,19 @@ export function createTimesheet (newTimesheet, clientId, projectId) {
 export function createClient (newClient) {
      
     return function(dispatch, getState) {
-         
+      const token = localStorage.getItem('token');
         fetch('http://localhost:3000/api/v1/clients', {
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json',
+              "Accepts": "application/json",
+              "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify(newClient),
           }) 
         .then(response => response.json())
         .then(newClientObj => { 
+                console.log(newClientObj)
                 let prevState = {...getState()}
                 prevState.user.clients.push(newClientObj)
                 dispatch({type:CREATE_CLIENT, payload:prevState.user})
@@ -66,21 +107,24 @@ export function createClient (newClient) {
     }      
 }
 
-export function createProject (newProject, clientId) {
+export function createProject (newProject) {
      
     return function(dispatch, getState) {
-         
+      const token = localStorage.getItem('token');
         fetch('http://localhost:3000/api/v1/projects', {
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json',
+              "Accepts": "application/json",
+              "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify(newProject),
           }) 
         .then(response => response.json())
         .then(newProjectObj => { 
+                console.log(newProjectObj)
                 let prevState = {...getState()}
-                let clientIndex = prevState.user.clients.findIndex(client => client.id === clientId)
+                let clientIndex = prevState.user.clients.findIndex(client => client.id === newProjectObj.client_id)
                 prevState.user.clients[clientIndex].projects.push(newProjectObj)
                 dispatch({type:CREATE_PROJECT, payload:prevState.user})
             });
@@ -90,10 +134,13 @@ export function createProject (newProject, clientId) {
 export function updateProjectCompletion (updatedProject, projectId, clientId) {
      
     return function(dispatch, getState) {
+      const token = localStorage.getItem('token');
         fetch(`http://localhost:3000/api/v1/projects/${projectId}`, {
             method: 'PATCH', 
             headers: {
               'Content-Type': 'application/json',
+              "Accepts": "application/json",
+              "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({complete: updatedProject}),
           })    
@@ -115,10 +162,13 @@ export function updateProjectCompletion (updatedProject, projectId, clientId) {
 export function deleteProject (projectId, clientId,project_amt) {
      
     return function(dispatch, getState) {
+      const token = localStorage.getItem('token');
         fetch(`http://localhost:3000/api/v1/projects/${projectId}`, {
             method: 'DELETE', 
             headers: {
               'Content-Type': 'application/json',
+              "Accepts": "application/json",
+              "Authorization": `Bearer ${token}`
             },
           })    
         .then(response => response.json())

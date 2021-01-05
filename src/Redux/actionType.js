@@ -15,3 +15,6 @@ export const DELETE_PROJECT = "DELETE_PROJECT"
 
 export const UPDATE_PROJECT_COMP = "UPDATE_PROJECT_COMP"
 
+export const CREATE_USER = "CREATE_USER"
+
+

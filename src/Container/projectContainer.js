@@ -1,9 +1,9 @@
 import React from 'react'
 import { BrowserRouter as Router, Route , Switch, withRouter, NavLink} from 'react-router-dom'
 import ProjectForm from '../Component/projectForm'
-import Modal from 'react-modal'
 import {connect} from 'react-redux'
 import {updateProjectCompletion, deleteProject} from '../Redux/actions'
+import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react'
 
 
 class ProjectContainer extends React.Component {
@@ -18,18 +18,7 @@ class ProjectContainer extends React.Component {
         }
     }
 
-    customStyles =()=> {
-        return {
-            content : {
-              top                   : '50%',
-              left                  : '50%',
-              right                 : 'auto',
-              bottom                : 'auto',
-              marginRight           : '-50%',
-              transform             : 'translate(-50%, -50%)'
-            } 
-        }
-      }
+
 
       openModalForm = () => {
         console.log("form was clicked")
@@ -78,6 +67,7 @@ class ProjectContainer extends React.Component {
                     <Route exact path = "/clients" render={()=> {
                         return (
                                 <>
+                                <h3> {this.props.client.name}</h3>
                                 <div id = "project-table">
                                     <span className="project-table-header">Name</span>
                                     <span className="project-table-header">Hours</span>
@@ -86,10 +76,17 @@ class ProjectContainer extends React.Component {
                                     <span className="project-table-header"> Delete</span>
                                     {this.renderProjects()}
                                 </div>
-                                    <button onClick={this.openModalForm}> Add Project</button> 
-                                    <Modal isOpen= {this.state.formModalIsOpen} style={this.customStyles()} ariaHideApp={false}>  
-                                    <ProjectForm clientId = {this.props.clientId} closeFormModal ={this.closeFormModal} />  <br/> 
-                                    <button className="btn" onClick = {this.closeFormModal}> Close </button>
+                                 
+                                    <Modal
+                                     
+                                        closeIcon
+                                        open={this.state.formModalIsOpen}
+                                        trigger={<Button color="blue">Add New Project</Button>}
+                                        onClose={this.closeFormModal}
+                                        onOpen={this.openModalForm}
+                                        >
+                                    <ProjectForm clientId = {this.props.client.id} closeFormModal ={this.closeFormModal} />  <br/> 
+               
                                      </Modal>
                                  </>
                         )

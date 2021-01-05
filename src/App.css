@@ -1,11 +1,10 @@
 
 .App {
   text-align: center;
+  margin: 100px; 
+  /* background-color: rgb(243, 243, 167); */
 
 }
-
-
-
 
 .App-logo {
   height: 40vmin;
@@ -81,11 +80,7 @@
   opacity: 1  
 }
 
-.signup-form {
-  width: 150px;
-  padding: 2px
-  /* box-shadow: 10px 10px 8px 10px rgb(171, 171, 227); */
-}
+
 
 .navbar-nav {
   display: inline;
@@ -95,4 +90,9 @@
 nav {
   display: inline;
   list-style-type: none
+}
+
+input#myCheck{
+  text-align: center;
+  width: 100%; 
 }

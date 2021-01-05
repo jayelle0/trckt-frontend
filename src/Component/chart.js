@@ -3,10 +3,17 @@ import React from "react"
 import { BrowserRouter as Router, Route , Switch, withRouter, NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line,} from 'recharts';
-  
-
+import domtoimage from 'dom-to-image';
+import fileDownload from "js-file-download";
 
 class AppCharts extends React.Component {
+
+    handleSaveClick = () => {
+        domtoimage.toBlob(document.getElementById('chart'))
+           .then(function (blob) {
+              fileDownload(blob, 'dom-to-image.png');
+           });
+       }
 
 
    
@@ -15,9 +22,7 @@ class AppCharts extends React.Component {
    
         return (
             <>
-            <Switch> 
-                 <Route exact path = "/open_projects" render={()=> {
-                     return (
+                         <div id="chart">
                         <BarChart
                         width={650}
                         height={300}
@@ -27,58 +32,16 @@ class AppCharts extends React.Component {
                         }}
                       >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
+                        <XAxis dataKey="name" name ="Client"/>
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="client_completed_earned" name= "Completed Earned" stackId="a" fill="#8884d8" />
-                        <Bar dataKey="client_incomplete_earned" name= "Earned - Incomplete Project" stackId="a" fill="#82ca9d" />
+                        <Bar dataKey="client_completed_earned" name= "Completed Earned" stackId="a" fill="#8794C7" />
+                        <Bar dataKey="client_incomplete_earned" name= "Earned - Incomplete Project" stackId="a" fill="#ffbf80" />
                       </BarChart>
-                     )
-                 }} />
+                      </div>
+                      <button onClick={this.handleSaveClick}> Save Chart! </button>
 
-                <Route exact path = "/clients" render={()=> {
-                     return (
-                        <BarChart
-                        width={650}
-                        height={300}
-                        data={this.props.user.clients}
-                        margin={{
-                          top: 20, right: 30, left: 20, bottom: 5,
-                        }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="client_completed_earned" name= "Completed Earned" stackId="a" fill="#8884d8" />
-                        <Bar dataKey="client_incomplete_earned" name= "Earned - Incomplete Project" stackId="a" fill="#82ca9d" />
-                      </BarChart>
-                     )
-                 }} />
-                  <Route path="/clients/:id/projects/:id" render={()=> {
-                     return (
-                        <LineChart
-                        width={500}
-                        height={300}
-                        data={this.props.currentProject.timesheets}
-                        margin={{
-                          top: 5, right: 30, left: 20, bottom: 5,
-                        }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date"  />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="hours" stroke="#8884d8" activeDot={{ r: 8 }} />
-    
-                      </LineChart>
-                     )
-                 }} />
-
-              </Switch> 
             </>
 
         )

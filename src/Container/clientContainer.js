@@ -3,20 +3,61 @@ import Client from '../Component/client'
 import {connect} from 'react-redux'
 import { BrowserRouter as Router, Route , Switch, withRouter} from 'react-router-dom'
 import Chart from "../Component/chart"
+import { Card } from 'semantic-ui-react'
+import ProjectContainer from './projectContainer'
+import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react'
+import ClientForm from '../Component/clientForm'
+import Navbar from './navBar'
 
 
 class ClientContainer extends React.Component {
 
-    renderClients = () => {return this.props.clients.map(clientObj=> <Client  client={clientObj} key={clientObj.id}/> ) }
+    state = {
+        showProjects: false, 
+        client: {},
+        clientForm:false, 
+    }
+
+    renderClients = () => {return this.props.clients.map(clientObj=> <Client  client={clientObj} key={clientObj.id} openProjectHandler={this.openProjectHandler}/> ) }
+
+    openProjectHandler = (client) => {
+        this.setState({showProjects: !this.state.showProjects, client: client})
+    }
+
+    closeClientForm = () => {
+        this.setState({clientForm:false})
+    }
+    openClientForm = () => {
+        this.setState({clientForm:true})
+    }
+    
 
     render() {
         
         return (
          <>
+            <Navbar/>
             { this.props.clients === undefined ? <h1> Loading Clients </h1>:
                  <>
-                 <Chart/> 
+                 {/* <Chart/>  */}
+                 <br/> 
+                 <br/> 
+                 <Card.Group itemsPerRow={3}>
                 {this.renderClients()}
+                </Card.Group>
+                <br/>
+                <Modal
+                // as ={Form}
+                closeIcon
+                open={this.state.clientForm}
+                trigger={<Button color="blue">Add New Client</Button>}
+                onClose={this.closeClientForm}
+                onOpen={this.openClientForm}
+                >
+                    <ClientForm closeForm={this.closeClientForm} userId={this.props.userId}/>
+                </Modal>
+               
+                 {this.state.showProjects?  <ProjectContainer  client ={this.state.client} projects = {this.state.client.projects}/>:  null}
                 </>
             }
          </>

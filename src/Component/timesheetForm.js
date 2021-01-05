@@ -1,6 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {createTimesheet} from '../Redux/actions'
+import {  Table} from 'semantic-ui-react'
+
 
 class TimesheetForm extends React.Component {
     state = {
@@ -31,12 +33,13 @@ class TimesheetForm extends React.Component {
     render() {
         // console.log(this.props)
         return (
-             <>
-                <input type = "date" name = "date" value = {this.state.date} onChange = {this.changeHandler} placeholder = "Work Date" />
-                <input type = "number" name = "hours" value = {this.state.hours} onChange = {this.changeHandler} placeholder = "Hours worked" />
-                <input type = "text" name = "note" value = {this.state.note} onChange = {this.changeHandler}placeholder = "Include All Notes" />
-                <input type = "submit" value = "Submit Timesheet" onClick = {this.submitHandler} />
-            </>
+        <Table.Row>
+             <Table.Cell ><input type = "date" name = "date" value = {this.state.date} onChange = {this.changeHandler} placeholder = "Work Date" /></Table.Cell>
+             <Table.Cell > <input type = "number" name = "hours" value = {this.state.hours} onChange = {this.changeHandler} placeholder = "Hours worked" /></Table.Cell>
+             <Table.Cell ><input type = "text" name = "note" value = {this.state.note} onChange = {this.changeHandler}placeholder = "Include All Notes" /></Table.Cell>
+             <Table.Cell > <input type = "submit" value = "Submit Timesheet" onClick = {this.submitHandler} /></Table.Cell>
+         </Table.Row>
+
         )
     }
 }

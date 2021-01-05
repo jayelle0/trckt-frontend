@@ -25,6 +25,9 @@ function userReducer (state=defaultState.user, action) {
         case "DELETE_PROJECT":    
             return {...state, ...action.payload }
 
+        case "CREATE_USER":    
+            return {...state, ...action.payload }
+
         default:
             return state 
     }

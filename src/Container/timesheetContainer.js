@@ -1,6 +1,8 @@
 import React from 'react'
-import Timesheet from '../Component/timesheet'
 import TimesheetForm from '../Component/timesheetForm'
+import { BrowserRouter as Router, Route , Switch, withRouter} from 'react-router-dom'
+import { Grid, Icon, Button, Header, Table} from 'semantic-ui-react'
+
 
 class TimesheetContainer extends React.Component {
 
@@ -19,8 +21,43 @@ class TimesheetContainer extends React.Component {
         showTimesheetForm: false
     }
     renderTimesheets = () => {
-        return this.props.timesheets.map(timesheetObj=> <Timesheet key = {timesheetObj.id} timesheet ={timesheetObj} />)
-    }
+        
+        return this.props.timesheets.map(timesheetObj=> {
+            const deleteHandler = () => {
+                console.log("delete timesheet")
+            }
+                return(
+                <Table.Row>
+                    <Table.Cell>{timesheetObj.date}</Table.Cell>
+                    <Table.Cell>{timesheetObj.hours}</Table.Cell>
+                    <Table.Cell>{timesheetObj.note}</Table.Cell>
+                    <Table.Cell>  <button className = "project-delete-btn" onClick ={deleteHandler}> Delete </button></Table.Cell>
+                </Table.Row>
+                        
+                )
+            }
+        )}
+
+        renderInvoiceTimesheets = () => {
+            return this.props.timesheets.map(timesheetObj=> {
+
+                const timesheetEarned = () => {
+                   let earned = timesheetObj.hours*this.props.project.hourly_fee
+                   return earned
+                }
+
+                return(
+                    <Table.Row>
+                          <Table.Cell>{this.props.project.name}</Table.Cell>
+                        <Table.Cell>{timesheetObj.date}</Table.Cell>
+                        <Table.Cell>{timesheetObj.note}</Table.Cell>
+                        <Table.Cell>{timesheetObj.hours}</Table.Cell>
+                        <Table.Cell>{this.props.project.hourly_fee}</Table.Cell>
+                        <Table.Cell>{timesheetEarned()}</Table.Cell>
+                    </Table.Row>
+                )
+                }
+            )}
 
     buttonHandler = () => {
         this.setState({showTimesheetForm: true})
@@ -33,21 +70,66 @@ class TimesheetContainer extends React.Component {
 
         return (
             <>
-            <div id = "timesheet-table">
-                
-                <span className="timesheet-table-header">Date</span>
-                <span className="timesheet-table-header">Hours</span>
-                <span className="timesheet-table-header"> Note</span>
-                <span> </span>
-                {this.renderTimesheets()}
-                {this.state.showTimesheetForm? <TimesheetForm closeTimesheetContainer ={this.closeTimesheetContainer} projectId ={this.props.projectId}  clientId ={this.props.clientId} /> : null}
+            <Switch>
+           
+            <Route path="/clients/:id/projects/:id" render={()=> {
+                return ( 
+                        <>
+                           <Table color="blue" size= "small" compact="very">
+                        <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell >Date</Table.HeaderCell>
+                            <Table.HeaderCell >Hours</Table.HeaderCell>
+                            <Table.HeaderCell >Note</Table.HeaderCell>
+                            <Table.HeaderCell >Delete</Table.HeaderCell>
+                        </Table.Row>
+                        </Table.Header>
 
+                        <Table.Body>
+                        {this.renderTimesheets()}
+                      
+                        {this.state.showTimesheetForm? <TimesheetForm closeTimesheetContainer ={this.closeTimesheetContainer} projectId ={this.props.projectId}  clientId ={this.props.clientId} /> : null}
+                        </Table.Body>
+                    </Table >
 
-            </div>
-               {this.props.project.complete? null: <button onClick = {this.buttonHandler}> Add Timesheet </button>}
-             </>
+             
+                  {this.props.project.complete? null: <button onClick = {this.buttonHandler}> Add Timesheet </button>}
+                 </>
+                )
+            }} />
+             <Route exact path = "/invoice" render={()=> {
+                return ( 
+                    <Table color="blue" size= "small" compact="very">
+                        <Table.Header>
+                            <Table.Row>
+                                 <Table.HeaderCell >Project</Table.HeaderCell>
+                                <Table.HeaderCell >Date</Table.HeaderCell>
+                                <Table.HeaderCell >Note</Table.HeaderCell>
+                                <Table.HeaderCell >Hours</Table.HeaderCell>
+                                <Table.HeaderCell >Rate</Table.HeaderCell>
+                                <Table.HeaderCell >Total</Table.HeaderCell>
+
+                            </Table.Row>
+                        </Table.Header>
+
+                        <Table.Body>
+                            {this.renderInvoiceTimesheets()}
+                            <Table.Row>
+                                <Table.Cell></Table.Cell>
+                                <Table.Cell></Table.Cell>
+                                <Table.Cell></Table.Cell>
+                                <Table.Cell></Table.Cell>
+                                <Table.Cell><strong>Grand Total</strong></Table.Cell>
+                                <Table.Cell><strong>${this.props.project.project_total_earned}</strong> </Table.Cell>
+                            </Table.Row>
+                        </Table.Body>
+                    </Table >
+                )
+            }} />
+            </Switch> 
+            </>
         )
     }
 }
 
-export default TimesheetContainer 
+export default withRouter(TimesheetContainer)
