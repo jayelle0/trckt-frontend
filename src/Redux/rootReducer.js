@@ -28,6 +28,9 @@ function userReducer (state=defaultState.user, action) {
         case "CREATE_USER":    
             return {...state, ...action.payload }
 
+        case "DELETE_TIMESHEET":    
+            return {...state, ...action.payload }
+
         default:
             return state 
     }

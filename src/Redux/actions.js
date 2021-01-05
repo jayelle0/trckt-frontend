@@ -4,6 +4,7 @@ import {CREATE_CLIENT} from './actionType'
 import {CREATE_PROJECT} from './actionType'
 import {UPDATE_PROJECT_COMP} from './actionType'
 import {DELETE_PROJECT} from './actionType' 
+import {DELETE_TIMESHEET} from './actionType' 
 import {CREATE_USER} from './actionType' 
 
 
@@ -189,5 +190,40 @@ export function deleteProject (projectId, clientId,project_amt) {
             });
     }   
     
+}
+
+export function deleteTimesheet (delProject, clientId,delTimesheet) {
+     
+  return function(dispatch, getState) {
+    const token = localStorage.getItem('token');
+      fetch(`http://localhost:3000/api/v1/timesheets/${delTimesheet.id}`, {
+          method: 'DELETE', 
+          headers: {
+            'Content-Type': 'application/json',
+            "Accepts": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+        })    
+      .then(response => response.json())
+      .then(deletedTimesheetObj => { 
+              let prevState = {...getState()}
+              let clientIndex = prevState.user.clients.findIndex(client => client.id === clientId)
+              let projectIndex = prevState.user.clients[clientIndex].projects.findIndex(project => project.id === delProject.id)
+              let timesheetIndex = prevState.user.clients[clientIndex].projects[projectIndex].timesheets.findIndex(timesheet => timesheet.id === delTimesheet.id)
+              prevState.user.clients[clientIndex].projects[projectIndex].project_total_hours -= delTimesheet.hours
+              let total_earned = delTimesheet.hours*delProject.hourly_fee
+              prevState.user.clients[clientIndex].projects[projectIndex].project_total_earned -= total_earned
+              prevState.user.clients[clientIndex].projects[projectIndex].timesheets.splice(timesheetIndex,1)
+              if (delProject.complete === true ) {
+                prevState.user.clients[clientIndex].client_completed_earned-=delTimesheet.hours
+              }
+              else if (delProject.complete === false) {
+                prevState.user.clients[clientIndex].client_incomplete_earned-=delTimesheet.hours
+              }
+              console.log(prevState)
+              dispatch({type:DELETE_TIMESHEET, payload:prevState.user})
+          });
+  }   
+  
 }
 

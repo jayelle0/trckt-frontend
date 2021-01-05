@@ -2,6 +2,8 @@ import React from 'react'
 import TimesheetForm from '../Component/timesheetForm'
 import { BrowserRouter as Router, Route , Switch, withRouter} from 'react-router-dom'
 import { Grid, Icon, Button, Header, Table} from 'semantic-ui-react'
+import {connect} from 'react-redux'
+import {deleteTimesheet} from '../Redux/actions'
 
 
 class TimesheetContainer extends React.Component {
@@ -24,7 +26,7 @@ class TimesheetContainer extends React.Component {
         
         return this.props.timesheets.map(timesheetObj=> {
             const deleteHandler = () => {
-                console.log("delete timesheet")
+                {this.props.deleteTimesheet(this.props.project, this.props.clientId,timesheetObj)}
             }
                 return(
                 <Table.Row>
@@ -132,4 +134,11 @@ class TimesheetContainer extends React.Component {
     }
 }
 
-export default withRouter(TimesheetContainer)
+
+function mdp(dispatch){
+    return {deleteTimesheet: (delProject, clientId,delTimesheet) => dispatch(deleteTimesheet(delProject, clientId,delTimesheet) )}
+  }
+  
+
+
+export default withRouter(connect(null,mdp)(TimesheetContainer));

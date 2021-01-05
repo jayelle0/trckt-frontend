@@ -1,20 +1,22 @@
 export const FETCH_USER = "FETCH_USER"
 
-export const CREATE_TIMESHEET = "CREATE_TIMESHEET"
-
+export const CREATE_USER = "CREATE_USER"
 
 export const CREATE_CLIENT = "CREATE_CLIENT"
 
-
 export const CREATE_PROJECT = "CREATE_PROJECT"
-
-
 
 export const DELETE_PROJECT = "DELETE_PROJECT"
 
-
 export const UPDATE_PROJECT_COMP = "UPDATE_PROJECT_COMP"
 
-export const CREATE_USER = "CREATE_USER"
+export const CREATE_TIMESHEET = "CREATE_TIMESHEET"
+
+export const DELETE_TIMESHEET = "DELETE_TIMESHEET"
+
+
+
+
+
 
 
