@@ -33,7 +33,7 @@ class TimesheetContainer extends React.Component {
                     <Table.Cell>{timesheetObj.date}</Table.Cell>
                     <Table.Cell>{timesheetObj.hours}</Table.Cell>
                     <Table.Cell>{timesheetObj.note}</Table.Cell>
-                    <Table.Cell>  <button className = "project-delete-btn" onClick ={deleteHandler}> Delete </button></Table.Cell>
+                    <Table.Cell>  <Button className = "project-delete-btn" onClick ={deleteHandler}> Delete </Button></Table.Cell>
                 </Table.Row>
                         
                 )
@@ -77,7 +77,7 @@ class TimesheetContainer extends React.Component {
             <Route path="/clients/:id/projects/:id" render={()=> {
                 return ( 
                         <>
-                           <Table color="blue" size= "small" compact="very">
+                           <Table color="blue" size= "small" compact="very" striped="true" id= "timesheet-container">
                         <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell >Date</Table.HeaderCell>
@@ -95,7 +95,7 @@ class TimesheetContainer extends React.Component {
                     </Table >
 
              
-                  {this.props.project.complete? null: <button onClick = {this.buttonHandler}> Add Timesheet </button>}
+                  {this.props.project.complete? null: <Button onClick = {this.buttonHandler}> Add Timesheet </Button>}
                  </>
                 )
             }} />

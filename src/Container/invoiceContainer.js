@@ -15,7 +15,7 @@ class InvoiceContainer extends React.Component{
       }
       
     handleSaveClick = () => {
-        domtoimage.toBlob(document.getElementById('invoice'))
+        domtoimage.toBlob(document.getElementById('invoice-grid'))
            .then(function (blob) {
               fileDownload(blob, 'dom-to-image.png');
            });
@@ -28,7 +28,7 @@ class InvoiceContainer extends React.Component{
             <NavBar/>
             <br/>
             <div id= "invoice" >
-            <Grid >
+            <Grid id="invoice-grid">
                 <Grid.Row>
                     <Grid.Column floated='left' width={5}>
                     <Header as="h2">{this.props.user.name}
@@ -86,7 +86,6 @@ class InvoiceContainer extends React.Component{
                         </Table.Row>
                         </Table.Body>
                     </Table>
-                    
                     </Grid.Column>
                 </Grid.Row>
                 <Grid.Row>
@@ -94,12 +93,11 @@ class InvoiceContainer extends React.Component{
                          <TimesheetContainer timesheets = {this.props.location.query.project.timesheets} projectId ={this.props.location.query.project.id}  clientId ={this.props.location.query.client.id} project= {this.props.location.query.project}/>
                     </Grid.Column>
                 </Grid.Row>
-              
-                
             </Grid>
+            <br/>
             </div>
             <br/>
-            <button onClick={this.handleSaveClick}> Download Invoice </button>
+            <Button onClick={this.handleSaveClick}> Download Invoice </Button>
 
             </>
         )

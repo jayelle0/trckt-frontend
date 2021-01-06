@@ -66,7 +66,7 @@ class ProjectContainer extends React.Component {
                 <Switch>
                     <Route exact path = "/clients" render={()=> {
                         return (
-                                <>
+                                <div id ="client-project-div">
                                 <h3> {this.props.client.name}</h3>
                                 <div id = "project-table">
                                     <span className="project-table-header">Name</span>
@@ -76,7 +76,7 @@ class ProjectContainer extends React.Component {
                                     <span className="project-table-header"> Delete</span>
                                     {this.renderProjects()}
                                 </div>
-                                 
+                                 <br/>
                                     <Modal
                                      
                                         closeIcon
@@ -88,7 +88,7 @@ class ProjectContainer extends React.Component {
                                     <ProjectForm clientId = {this.props.client.id} closeFormModal ={this.closeFormModal} />  <br/> 
                
                                      </Modal>
-                                 </>
+                                 </div>
                         )
                     }} />
 

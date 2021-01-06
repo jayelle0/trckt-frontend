@@ -4,6 +4,7 @@ import {NavLink, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getUserFromApi} from '../Redux/actions'
 import { withRouter } from "react-router-dom";
+import logo from './logo2.png'
 
 class Login extends React.Component {
     state= {
@@ -27,8 +28,9 @@ class Login extends React.Component {
         return (
                 <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
                 <Grid.Column style={{ maxWidth: 450 }}>
-                <Header as='h2' color='teal' textAlign='center'>
-                   Log-in to your account
+                <Header as='h2' color='blue' textAlign='center'>
+                {/* <Image src={logo} />  */}
+                Log-in to your account
                 </Header>
                 <Form size='large' onSubmit ={this.submitHandler}>
                     <Segment stacked>
@@ -42,7 +44,7 @@ class Login extends React.Component {
                         name= "password" value={this.state.password} onChange = {this.changeHandler}
                     />
             
-                    <Button color='teal' fluid size='large'>
+                    <Button color='blue' fluid size='large'>
                         Login
                     </Button>
                     </Segment>

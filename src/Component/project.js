@@ -2,7 +2,7 @@ import React from 'react'
 import TimesheetContainer from '../Container/timesheetContainer'
 import Chart from './chart'
 import Navbar from '../Container/navBar'
-import { Button } from 'semantic-ui-react'
+import { Button, Image, Item, Icon, Header} from 'semantic-ui-react'
 import { Link} from 'react-router-dom'
 
 
@@ -13,19 +13,26 @@ class Project extends React.Component {
     render() {
     
         return (
-
-            <>         
+            <>      
             <Navbar/>
-            <h1>Client: {this.props.client.name} </h1>
-            <h5>Project Name: {this.props.project.name}</h5>
-            <h5>Payment Terms: {this.props.project.payment_terms}</h5> 
-            <h5>Total Hours:   {this.props.project.project_total_hours}</h5>
-            <h5>Total Earned: ${this.props.project.project_total_earned}</h5>
-            <h5>Complete: {this.props.project.complete? "Yes":"No" }</h5> 
-            <TimesheetContainer timesheets = {this.props.project.timesheets} projectId ={this.props.project.id}  clientId ={this.props.client.id} project= {this.props.project}/>
+            <br/>
+                <div id= "project-description">
+                <Header as='h1'>
+                <Icon name='user' size="large" circular="true"/> {this.props.client.name}
+                </Header>
+                <Header as='h3'>Project: {this.props.project.name}
+                    <Header.Subheader>
+                        Payment Terms: {this.props.project.payment_terms} <br/>
+                        Total Hours:   {this.props.project.project_total_hours} <br/>
+                        Total Earned: ${this.props.project.project_total_earned}<br/>
+                        Complete: {this.props.project.complete? "Yes":"No" } <br/>
+                    </Header.Subheader>
+                </Header>
+                </div>
+           
+                 <TimesheetContainer timesheets = {this.props.project.timesheets} projectId ={this.props.project.id}  clientId ={this.props.client.id} project= {this.props.project}/>
             <br/> 
-            <br/> 
-            
+            <br/>
            <Button><Link  to={{
                 pathname: `/invoice`, 
                 query:{client: this.props.client, project: this.props.project}

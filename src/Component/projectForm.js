@@ -102,7 +102,7 @@ class ProjectForm extends React.Component {
                                 />
                                 <Form.Input fluid label='Payment Terms' name= "payment_terms" value={this.state.payment_terms} onChange = {this.changeHandler} placeholder= "Payment Terms"  />     <br/>              
                                 <Form.Input fluid label='Hourly Fee' name= "hourly_fee" value={this.state.hourly_fee} onChange = {this.changeHandler} placeholder= "Hourly Fee"   />   <br/> 
-            
+                                
                                 <Button size="small" color= "blue" type='submit'>Add New Project</Button>
                                 </Form.Group>
                             

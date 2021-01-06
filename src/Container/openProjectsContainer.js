@@ -51,10 +51,11 @@ class OpenProjectsContainer extends React.Component{
         return (
             <>
             <Navbar/>
+            <br/>
             {this.props.user.clients=== undefined? 
             <h1>Projects Loading...</h1>:
             <>
-            <h3> Welcome Back {this.props.user.name}! Below are your current projects</h3>
+            <h3> Welcome Back {this.props.user.name}! </h3>
               <Chart allProjects={this.allProjects()}/>
               <br/>
               <br/>
@@ -66,6 +67,8 @@ class OpenProjectsContainer extends React.Component{
                 trigger={<Button color="blue">Add New Project</Button>}
                 onClose={this.closeModalForm}
                 onOpen={this.openModalForm}
+                centered=" true" 
+                size='small'
                 >
                     <ProjectForm closeFormModal={this.closeModalForm} user={this.props.user}/>
                 </Modal>

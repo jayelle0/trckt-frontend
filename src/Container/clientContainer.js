@@ -21,7 +21,9 @@ class ClientContainer extends React.Component {
     renderClients = () => {return this.props.clients.map(clientObj=> <Client  client={clientObj} key={clientObj.id} openProjectHandler={this.openProjectHandler}/> ) }
 
     openProjectHandler = (client) => {
-        this.setState({showProjects: !this.state.showProjects, client: client})
+        this.setState({showProjects: true, client: client})
+        
+        // client-project-div
     }
 
     closeClientForm = () => {
