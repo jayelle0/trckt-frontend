@@ -4,6 +4,7 @@ import ProjectForm from '../Component/projectForm'
 import {connect} from 'react-redux'
 import {updateProjectCompletion, deleteProject} from '../Redux/actions'
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react'
+import { Element } from "react-scroll";
 
 
 class ProjectContainer extends React.Component {
@@ -66,7 +67,9 @@ class ProjectContainer extends React.Component {
                 <Switch>
                     <Route exact path = "/clients" render={()=> {
                         return (
-                                <div id ="client-project-div">
+                            <Element name = "client-project-div"> 
+
+                               <>
                                 <h3> {this.props.client.name}</h3>
                                 <div id = "project-table">
                                     <span className="project-table-header">Name</span>
@@ -79,16 +82,17 @@ class ProjectContainer extends React.Component {
                                  <br/>
                                     <Modal
                                      
-                                        closeIcon
-                                        open={this.state.formModalIsOpen}
-                                        trigger={<Button color="blue">Add New Project</Button>}
-                                        onClose={this.closeFormModal}
-                                        onOpen={this.openModalForm}
-                                        >
+                                     closeIcon
+                                     open={this.state.formModalIsOpen}
+                                     trigger={<Button color="blue">Add New Project</Button>}
+                                     onClose={this.closeFormModal}
+                                     onOpen={this.openModalForm}
+                                     >
                                     <ProjectForm clientId = {this.props.client.id} closeFormModal ={this.closeFormModal} />  <br/> 
                
                                      </Modal>
-                                 </div>
+                                 </>
+                                 </Element>
                         )
                     }} />
 

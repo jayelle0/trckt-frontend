@@ -8,6 +8,7 @@ import ProjectContainer from './projectContainer'
 import { Button, Header, Icon, Modal, Form } from 'semantic-ui-react'
 import ClientForm from '../Component/clientForm'
 import Navbar from './navBar'
+import {scroller  } from "react-scroll";
 
 
 class ClientContainer extends React.Component {
@@ -22,8 +23,12 @@ class ClientContainer extends React.Component {
 
     openProjectHandler = (client) => {
         this.setState({showProjects: true, client: client})
-        
-        // client-project-div
+        scroller.scrollTo('client-project-div', {
+            duration: 1500,
+            delay: 100,
+            smooth: true,
+            offset: 50
+        })
     }
 
     closeClientForm = () => {
@@ -58,7 +63,8 @@ class ClientContainer extends React.Component {
                 >
                     <ClientForm closeForm={this.closeClientForm} userId={this.props.userId}/>
                 </Modal>
-               
+                <br/>
+                <br/>
                  {this.state.showProjects?  <ProjectContainer  client ={this.state.client} projects = {this.state.client.projects}/>:  null}
                 </>
             }
