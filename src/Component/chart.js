@@ -62,7 +62,7 @@ class AppCharts extends React.Component {
                         }}
                       >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" name ="Client" angle={-45} textAnchor="end" height={50}/>
+                        <XAxis dataKey="name" name ="Client" angle={-45} textAnchor="end" height={60}/>
                         <YAxis 
                          width={90}
                         orientation='left'

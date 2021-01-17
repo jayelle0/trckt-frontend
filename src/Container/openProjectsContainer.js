@@ -60,6 +60,7 @@ class OpenProjectsContainer extends React.Component{
               <br/>
               <br/>
               <ProjectContainer projects={this.openProjects()}/>
+              <br/>
               <Modal
                 // as ={Form}
                 closeIcon
