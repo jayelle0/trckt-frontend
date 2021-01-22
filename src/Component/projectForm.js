@@ -65,7 +65,7 @@ class ProjectForm extends React.Component {
                         <Modal.Content>
                             <Form onSubmit= {this.formHandler}>
                                 <Form.Group widths='equal'>
-                                <Form.Input fluid label='Name' placeholder=' name' name= "name" value={this.state.name} onChange = {this.changeHandler}  />   <br/> 
+                                <Form.Input fluid label='Name' placeholder='Name' name= "name" value={this.state.name} onChange = {this.changeHandler}  />   <br/> 
                                 <br/> 
                                 <Form.Input fluid label='Payment Terms' name= "payment_terms" value={this.state.payment_terms} onChange = {this.changeHandler} placeholder= "Payment Terms"  />     <br/>              
                                 <Form.Input fluid label='Hourly Fee' name= "hourly_fee" value={this.state.hourly_fee} onChange = {this.changeHandler} placeholder= "Hourly Fee"   />   <br/> 
@@ -88,7 +88,7 @@ class ProjectForm extends React.Component {
                             <Form onSubmit= {this.formHandler}>
                                 <Form.Group widths='equal'>
                                 
-                                <Form.Input fluid label='Name' placeholder=' name' name= "name" value={this.state.name} onChange = {this.changeHandler}  />   <br/> 
+                                <Form.Input fluid label='Name' placeholder='Name' name= "name" value={this.state.name} onChange = {this.changeHandler}  />   <br/> 
                                 <br/> 
                                 <Form.Select
                                     fluid
